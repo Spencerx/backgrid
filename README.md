@@ -1,6 +1,6 @@
 # Backgrid.js
 
-[![Build Status](https://travis-ci.org/wyuenho/backgrid.png?branch=master)](https://travis-ci.org/wyuenho/backgrid)
+[![Build Status](https://travis-ci.org/blackducksoftware/backgrid.png?branch=master)](https://travis-ci.org/blackducksoftware/backgrid)
 
 Backgrid.js is a set of components for building semantic and easily stylable
 data grid widgets. It offers a simple, intuitive programming interface that
