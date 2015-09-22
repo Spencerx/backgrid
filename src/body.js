@@ -282,6 +282,10 @@ var Body = Backgrid.Body = Backbone.View.extend({
       collection.setSorting(order && column.get("name"), order,
                             {sortValue: column.sortValue()});
 
+        if (collection.state.resetPageOnSort) {
+            collection.state.currentPage = collection.state.firstPage;
+        }
+
       if (collection.fullCollection) {
         // If order is null, pageable will remove the comparator on both sides,
         // in this case the default insertion order comparator needs to be
