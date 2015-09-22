@@ -276,12 +276,12 @@ var Body = Backgrid.Body = Backbone.View.extend({
                                            return model.cid.replace('c', '') * 1;
                                          });
 
-    if (Backbone.PageableCollection &&
-        collection instanceof Backbone.PageableCollection) {
+    if (Backbone.PageableCollection && collection instanceof Backbone.PageableCollection) {
 
-      collection.setSorting(order && column.get("name"), order,
-                            {sortValue: column.sortValue()});
-
+      collection.setSorting(order && column.get("name"), order,  {sortValue: column.sortValue()});
+        if (collection.state.resetPageOnSort) {
+            collection.state.currentPage = collection.state.firstPage;
+        }
       if (collection.fullCollection) {
         // If order is null, pageable will remove the comparator on both sides,
         // in this case the default insertion order comparator needs to be
@@ -292,9 +292,11 @@ var Body = Backgrid.Body = Backbone.View.extend({
         collection.fullCollection.sort();
         collection.trigger("backgrid:sorted", column, direction, collection);
       }
-      else collection.fetch({reset: true, success: function () {
-        collection.trigger("backgrid:sorted", column, direction, collection);
-      }});
+      else {
+          collection.fetch({reset: true, success: function () {
+              collection.trigger("backgrid:sorted", column, direction, collection);
+          }});
+      }
     }
     else {
       collection.comparator = comparator;
