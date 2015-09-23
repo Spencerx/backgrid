@@ -135,6 +135,19 @@ var HeaderCell = Backgrid.HeaderCell = Backbone.View.extend({
 });
 
 /**
+ EmptyHeaderCell is a special cell class that renders an empty column header cell. For
+ accessibility reasons, the empty header cell should use a TD element instead of TH
+
+ @class Backgrid.EmptyHeaderCell
+ @extends Backbone.View
+ */
+var EmptyHeaderCell = Backgrid.EmptyHeaderCell = Backgrid.HeaderCell.extend({
+
+  /** @property */
+  tagName: "td"
+});
+
+/**
    HeaderRow is a controller for a row of header cells.
 
    @class Backgrid.HeaderRow
@@ -159,7 +172,13 @@ var HeaderRow = Backgrid.HeaderRow = Backgrid.Row.extend({
   },
 
   makeCell: function (column, options) {
-    var headerCell = column.get("headerCell") || options.headerCell || HeaderCell;
+
+    var headerCell =  column.get("headerCell") || options.headerCell;
+
+    if(typeof(headerCell) === 'undefined') {
+        headerCell = column.get('label') === '' ? EmptyHeaderCell : HeaderCell;
+    }
+
     headerCell = new headerCell({
       column: column,
       collection: this.collection
